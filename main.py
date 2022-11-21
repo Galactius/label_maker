@@ -69,10 +69,12 @@ class MainApplication(tk.Frame):
         cur_document = "labels - " + str(date_str) + ".docx"
         document.save(cur_document)
 
+        # test message for test branch
+
         # Covert document to pdf for printing (to physical printer) then delete printed pdf.
         # needed to resolve XPS error when printing .docx files
         convert(cur_document, "labels.pdf")
-        # os.system("lp labels.pdf")
+        os.system("lp labels.pdf")
         os.remove("labels.pdf")
 
 
