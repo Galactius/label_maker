@@ -10,6 +10,9 @@ import os
 import tkinter as tk
 from tkinter import simpledialog
 from tkinter import messagebox
+from tkinter import Label
+from tkinter import Entry
+from tkinter import Button
 
 
 class MainApplication(tk.Frame):
@@ -18,27 +21,101 @@ class MainApplication(tk.Frame):
     def validate_room_entry(input):
         return isinstance(input, int)
     def __init__(self, parent, *args, **kwargs):
-        # Setup inheritance for tkinter and remove initialized window
+        def handle_submit(self):
+            print("Form Submitted...")
+            guest_names.append(ent_name.get())
+            guest_rooms.append(ent_room_number.get())
+            guest_arrival.append(ent_arrival_date.get())
+            guest_depart.append(ent_depart_date.get())
+            print("Data Stored...")
+            print("guest_names: ",*guest_names)
+            print("guest_rooms: ", *guest_rooms)
+            print("guest_arrival: ", *guest_arrival)
+            print("guest_depart: ", *guest_depart)
+
+        # Setup inheritance for tkinter
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.parent.title('My Window')
-        root.withdraw()
+
+        # Create lists to store data from form
+        guest_names = []
+        guest_rooms = []
+        guest_arrival = []
+        guest_depart = []
+
+        # Generate form
+        while True:
+            self.parent.title("Daniel's Label Maker v0.3b")
+            root.geometry('500x500')
+
+            lbl_form_title = Label(root,text = "Populate Label Information Below:", width = 30, font = ('bold', 25))
+            lbl_form_title.pack()
+
+            lbl_name = Label(root, text="Guest Name: ", width = 15, font = 8)
+            lbl_name.pack()
+
+            ent_name = Entry(root)
+            ent_name.pack()
+
+            lbl_room_number = Label(root, text="Room Number: ", width = 15, font = 8)
+            lbl_room_number.pack()
+
+            ent_room_number = Entry(root)
+            ent_room_number.pack()
+
+            lbl_arrival_date = Label(root, text="Arrival Date (MM/DD/YYYY)", width = 25, font = 8)
+            lbl_arrival_date.pack()
+
+            ent_arrival_date = Entry(root)
+            ent_arrival_date.pack()
+
+            lbl_depart_date = Label(root, text = "Date of Departure (MM/DD/YYYY)", width = 25, font = 8)
+            lbl_depart_date.pack()
+
+            ent_depart_date = Entry(root)
+            ent_depart_date.pack()
+
+            btn_submit = Button(root, text="Submit", width = 20, fg='black')
+            btn_submit.pack()
+            btn_submit.bind("<Button-1>", handle_submit)
+
+            # data stored through handle_submit
+            # clear form
+
+            # generate messagebox asking user if they want to create another label
+            # if yes, then continue, if no then break from while loop
+
+            break
+        # Create confirmation message and end tkinter root
+        #confirm = messagebox.showinfo('Confirmation', 'Success! Generating label(s)')
+        #root.destroy()
+
+        # I could do a simple non dialog form that instead of having 1 simple dialog at the end for confirmation, has that confirmation
+        # but before that, a messagebox/simple Y/N button to ask if the user wants to add another label to the current page. Then when they hit no
+        # it gives the confirmation and continues execution as normal. If they click yes (add another label) then simply add the current form to a list
+        # that holds the names and another for the room number/dates, then empty the form and prompt again.
+
+        # while True:
+        #   spawn simple form (w/ submit button)
+        #   store entered data into separate lists once they hit submit
+        #   clear form
+        #   spawn simple y/n button dialog asking if they want to add a new label to the page
+        #   if (yes button pressed)
+        #       do continue while loop
+        #   if (no button pressed)
+        #       do break while loop
+        # spawn confirmation messagebox
 
         # TODO: Add ability to add multiple labels to the same page
         # TODO: ADD ability to enter date/time for reservation
+        # string = "" # will hold information for label.
 
+        # create simple form:
+
+
+        '''
         # Get current date/time
         date_str = date.today()
-
-        # Create Dialog Prompts
-        # TODO: Implement input validation
-        dlg_name = simpledialog.askstring('name', 'Enter Guest Name: ', parent=parent)
-        dlg_room_no = simpledialog.askinteger('room', 'Enter Guest Room Number: ', parent=parent)
-        string = dlg_name + "  " + str(dlg_room_no)
-
-        # Create confirmation message and end tkinter root
-        confirm = messagebox.showinfo('Confirmation', 'Success! Generating label: ' + string)
-        root.destroy()
 
         # Setup Document and Paragraph for labels
         document = Document()
@@ -69,13 +146,12 @@ class MainApplication(tk.Frame):
         cur_document = "labels - " + str(date_str) + ".docx"
         document.save(cur_document)
 
-        # test message for test branch
-
         # Covert document to pdf for printing (to physical printer) then delete printed pdf.
         # needed to resolve XPS error when printing .docx files
         convert(cur_document, "labels.pdf")
-        os.system("lp labels.pdf")
+        # os.system("lp labels.pdf")
         os.remove("labels.pdf")
+        '''
 
 
 if __name__ == '__main__':
