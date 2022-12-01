@@ -5,6 +5,7 @@ from docx.enum.style import WD_STYLE_TYPE
 from docx2pdf import convert
 from datetime import date
 import os
+# from waiting import wait
 
 # tkinter imports
 import tkinter as tk
@@ -28,10 +29,20 @@ class MainApplication(tk.Frame):
             guest_arrival.append(ent_arrival_date.get())
             guest_depart.append(ent_depart_date.get())
             print("Data Stored...")
-            print("guest_names: ",*guest_names)
-            print("guest_rooms: ", *guest_rooms)
-            print("guest_arrival: ", *guest_arrival)
-            print("guest_depart: ", *guest_depart)
+            # print("guest_names: ",*guest_names)
+            # print("guest_rooms: ", *guest_rooms)
+            # print("guest_arrival: ", *guest_arrival)
+            # print("guest_depart: ", *guest_depart)
+
+            # msg_box = messagebox.askquestion('New Label', 'Would you like to enter another label for printing? (Up to 4)',
+            #                                  icon='warning')
+            # if msg_box == 'yes':
+            #
+            #     root.destroy()
+            # else:
+            #     confirm = messagebox.showinfo('Confirmation', 'Success! Generating label(s)')
+            #
+            #     exit()
 
         # Setup inheritance for tkinter
         tk.Frame.__init__(self, parent, *args, **kwargs)
@@ -44,48 +55,44 @@ class MainApplication(tk.Frame):
         guest_depart = []
 
         # Generate form
-        while True:
-            self.parent.title("Daniel's Label Maker v0.3b")
-            root.geometry('500x500')
+        self.parent.title("Daniel's Label Maker v0.4b")
+        root.geometry('500x500')
 
-            lbl_form_title = Label(root,text = "Populate Label Information Below:", width = 30, font = ('bold', 25))
-            lbl_form_title.pack()
+        lbl_form_title = Label(root,text = "Populate Label Information Below:", width = 30, font = ('bold', 25))
+        lbl_form_title.pack()
 
-            lbl_name = Label(root, text="Guest Name: ", width = 15, font = 8)
-            lbl_name.pack()
+        lbl_name = Label(root, text="Guest Name: ", width = 15, font = 8)
+        lbl_name.pack()
 
-            ent_name = Entry(root)
-            ent_name.pack()
+        ent_name = Entry(root)
+        ent_name.pack()
 
-            lbl_room_number = Label(root, text="Room Number: ", width = 15, font = 8)
-            lbl_room_number.pack()
+        lbl_room_number = Label(root, text="Room Number: ", width = 15, font = 8)
+        lbl_room_number.pack()
 
-            ent_room_number = Entry(root)
-            ent_room_number.pack()
+        ent_room_number = Entry(root)
+        ent_room_number.pack()
 
-            lbl_arrival_date = Label(root, text="Arrival Date (MM/DD/YYYY)", width = 25, font = 8)
-            lbl_arrival_date.pack()
+        lbl_arrival_date = Label(root, text="Arrival Date (MM/DD/YYYY)", width = 25, font = 8)
+        lbl_arrival_date.pack()
 
-            ent_arrival_date = Entry(root)
-            ent_arrival_date.pack()
+        ent_arrival_date = Entry(root)
+        ent_arrival_date.pack()
 
-            lbl_depart_date = Label(root, text = "Date of Departure (MM/DD/YYYY)", width = 25, font = 8)
-            lbl_depart_date.pack()
+        lbl_depart_date = Label(root, text = "Date of Departure (MM/DD/YYYY)", width = 25, font = 8)
+        lbl_depart_date.pack()
 
-            ent_depart_date = Entry(root)
-            ent_depart_date.pack()
+        ent_depart_date = Entry(root)
+        ent_depart_date.pack()
 
-            btn_submit = Button(root, text="Submit", width = 20, fg='black')
-            btn_submit.pack()
-            btn_submit.bind("<Button-1>", handle_submit)
+        btn_submit = Button(root, text="Submit", width = 20, fg='black')
+        btn_submit.pack()
+        btn_submit.bind("<Button-1>", handle_submit)
 
-            # data stored through handle_submit
-            # clear form
+        # TODO fix issue with handle_submit running before submit button being pressed.
 
-            # generate messagebox asking user if they want to create another label
-            # if yes, then continue, if no then break from while loop
+        # string = guest_names[0] + guest_rooms[0]
 
-            break
         # Create confirmation message and end tkinter root
         #confirm = messagebox.showinfo('Confirmation', 'Success! Generating label(s)')
         #root.destroy()
@@ -108,15 +115,19 @@ class MainApplication(tk.Frame):
 
         # TODO: Add ability to add multiple labels to the same page
         # TODO: ADD ability to enter date/time for reservation
-        # string = "" # will hold information for label.
 
         # create simple form:
+        print("guest_names: ", *guest_names)
+        print("guest_rooms: ", *guest_rooms)
+        print("guest_arrival: ", *guest_arrival)
+        print("guest_depart: ", *guest_depart)
 
-
-        '''
         # Get current date/time
         date_str = date.today()
 
+
+
+        '''
         # Setup Document and Paragraph for labels
         document = Document()
         label = document.add_paragraph()
@@ -151,7 +162,7 @@ class MainApplication(tk.Frame):
         convert(cur_document, "labels.pdf")
         # os.system("lp labels.pdf")
         os.remove("labels.pdf")
-        '''
+    '''
 
 
 if __name__ == '__main__':
