@@ -30,19 +30,11 @@ class MainApplication(tk.Frame):
         # Get current date/time
         date_str = date.today()
 
-        # Create Dialog Prompts
-        # TODO: Implement input validation
-        dlg_name = simpledialog.askstring('name', 'Enter Guest Name: ', parent=parent)
-        dlg_room_no = simpledialog.askinteger('room', 'Enter Guest Room Number: ', parent=parent)
-        string = dlg_name + "  " + str(dlg_room_no)
-
-        # Create confirmation message and end tkinter root
-        confirm = messagebox.showinfo('Confirmation', 'Success! Generating label: ' + string)
-        root.destroy()
-
         # Setup Document and Paragraph for labels
         document = Document()
         label = document.add_paragraph()
+
+        labels_list = []
 
         # Setup styling for thicker label
         # TODO add styling for smaller date on label
@@ -54,18 +46,38 @@ class MainApplication(tk.Frame):
         font_object.name = 'Times New Roman'
 
         # Styling for thinner label
-        font_styles2 = document.styles
-        font_charstyle2 = font_styles2.add_style('thin_label', WD_STYLE_TYPE.CHARACTER)
-        font_object2 = font_charstyle2.font
-        font_object2.size = Pt(20)
-        font_object2.bold = True
-        font_object2.name = 'Times New Roman'
+        # font_styles2 = document.styles
+        # font_charstyle2 = font_styles2.add_style('thin_label', WD_STYLE_TYPE.CHARACTER)
+        # font_object2 = font_charstyle2.font
+        # font_object2.size = Pt(20)
+        # font_object2.bold = False
+        # font_object2.name = 'Times New Roman'
 
-        # Add text to docx and save
-        label.add_run(string, style='thick_label')
-        label.add_run("\n")
-        label.add_run("\n")
-        label.add_run(string, style='thin_label')
+        for x in range(3):
+            # Create Dialog Prompts
+            # TODO: Implement input validation
+            dlg_name = simpledialog.askstring('name', 'Enter Guest Name: (Press enter to skip)', parent=parent)
+            dlg_room_no = simpledialog.askinteger('room', 'Enter Guest Room Number:(Enter 0 to skip)', parent=parent)
+            string = dlg_name + "  " + str(dlg_room_no)
+            labels_list.append(string)
+
+            # Create confirmation message and end tkinter root
+            confirm = messagebox.showinfo('Confirmation', 'Success! Generating label: ' + string)
+        root.destroy()
+
+        # Remove "skipped" labels
+        for i in labels_list[:]:
+            if (i == "  0"):
+                labels_list.remove(i)
+
+        # Print data to word file
+        for x in range(len(labels_list)):
+            cur_str = labels_list[x]
+
+            # Add text to docx and save
+            label.add_run(cur_str, style='thick_label')
+            label.add_run("\n")
+            label.add_run("\n")
         cur_document = "labels - " + str(date_str) + ".docx"
         document.save(cur_document)
 
