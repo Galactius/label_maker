@@ -1,2 +1,6 @@
 *.docx
 *.pdf
+*.spec
+/venv
+/dist
+/build
