@@ -13,7 +13,7 @@ This program features a Tkinter GUI, Microsoft Word Doc generation, conversion t
 default system printer (if one is available), and a simple MacOS .app executable.
 
 This program makes use of various python packages, to avoid issues with dependencies a "requirements.txt" file has been
-provided with this repository. Use the '''pip install -r requirements.txt''' command in a terminal at the desired working 
+provided with this repository. Use the ```pip install -r requirements.txt command``` in a terminal at the desired working 
 directory to install all required dependencies. Please install dependencies before trying to run the script (this does
 not apply to running the .app executable). 
 
